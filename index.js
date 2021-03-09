@@ -77,6 +77,33 @@ let exportsObject = (db, opts) => {
             return runMethod("all", filter, options, opts);
         },
         table: table,
+        deleteTable: function (name, options = {}) {
+            if (name === undefined) throw new TypeError("Table name must be provided.");
+
+            return runMethod("deleteTable", name, options, opts)
+        },
+        attach: function(name, path, options = {}) {
+            throw new Error("This method isnt fully completed and have some issues.");
+            if(!name) throw new TypeError(`Name parameter must be provided.`);
+            if(!path) throw new TypeError(`Path parameter must be provided.`);
+
+            return runMethod("attach", name, path, options, opts);
+        },
+        detach: function(name, options = {}) {
+            throw new Error("This method isnt fully completed and have some issues.");
+
+            if(!name) throw new TypeError(`Name parameter must be provided.`);
+
+            return runMethod("detach", name, options, opts);
+        },
+        tables: function (dbname, options = {}) {
+            return runMethod("tables", dbname, options, opts)
+        },
+        databases: function (options = {}) {
+            throw new Error("This method isnt fully completed and have some issues.");
+
+            return runMethod("databases", options, opts)
+        },
         backups: {
             create: async function (name, options) {
                 try {
