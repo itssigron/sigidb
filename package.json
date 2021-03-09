@@ -1,0 +1,28 @@
+{
+  "name": "sigidb",
+  "version": "1.0.0",
+  "description": "Wrapper package for better-sqlite3, super easy to use.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itssigron/sigidb.git"
+  },
+  "keywords": [
+    "database",
+    "store",
+    "value",
+    "sigron",
+    "sigidb",
+    "sigi",
+    "better-sqlite3",
+    "sqlite3"
+  ],
+  "author": "SigroN",
+  "license": "ISC"
+}
