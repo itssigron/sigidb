@@ -76,7 +76,7 @@ console.log(users.all()) // [{id: "test1", value: 2}] (no need to provide a tabl
 ```
 
 ### db#deleteTable(*name*)
-Delete provided table.
+Deletes provided table.
 ```js
 console.log(db.all({table: "users"})) // [{id: "test1", value: 2}]
 db.deleteTable("users");
