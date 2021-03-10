@@ -12,11 +12,11 @@
 # <a name="docs" style="color: white">Documentation</a>
 
 - [db](#db)
-- [db#originalDB](#db#originalDB)
-- [db#Database()](#db#Databasename-options)
-- [db#tables()](#db#tables)
-- [db#table()](#db#tablename)
-- [db#deleteTable()](#db#deleteTablename)
+- [db#originalDB](#dboriginalDB)
+- [db#Database()](#dbDatabasename-options)
+- [db#tables()](#dbtables)
+- [db#table()](#dbtablename)
+- [db#deleteTable()](#dbdeleteTablename)
 
 ### db
 Require database.
