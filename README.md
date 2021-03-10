@@ -13,14 +13,6 @@
 
 - [Datebase](#Database)
 - [Database#originalDB](#Database.originalDB)
-- [Database#transaction()](#transactionfunction---function)
-- [Database#pragma()](#pragmastring-options---results)
-- [Database#backup()](#backupdestination-options---promise)
-- [Database#function()](#functionname-options-function---this)
-- [Database#aggregate()](#aggregatename-options---this)
-- [Database#loadExtension()](#loadextensionpath-entrypoint---this)
-- [Database#exec()](#execstring---this)
-- [Database#close()](#close---this)
 
 ### Database
 require database.
