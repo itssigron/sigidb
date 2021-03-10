@@ -13,8 +13,10 @@
 
 - [db](#db)
 - [db#originalDB](#db#originalDB)
-- [db#Database](#db#Databasename-options)
-- [db#table](db#tablename)
+- [db#Database()](#db#Databasename-options)
+- [db#tables()](#db#tables)
+- [db#table()](#db#tablename)
+- [db#deleteTable()](#db#deleteTablename)
 
 ### db
 Require database.
