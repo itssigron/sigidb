@@ -1,7 +1,7 @@
 const Database = require("better-sqlite3");
 const util = require("./util/util");
 const fs = require("fs");
-const db = new Database("db.sqlite");
+const db = new Database(":memory:");
 
 
 let exportsObject = (db, opts) => {
@@ -13,9 +13,10 @@ let exportsObject = (db, opts) => {
         let options = params[params.length - 1] || params[params.length - 2];
         if (util.typeof(options) !== "Object") options = {};
         if (!options.table) options.table = "main";
+        db.prepare(`CREATE TABLE IF NOT EXISTS ${options.table} (id TEXT, value TEXT)`).run();
         return file(...params.slice(0, params.length - 2).concat(options));
     };
-    return {
+    let obj = {
         Database(path, options) {
             return exportsObject(new Database(path, options), opts);
         },
@@ -82,17 +83,17 @@ let exportsObject = (db, opts) => {
 
             return runMethod("deleteTable", name, options, opts)
         },
-        attach: function(name, path, options = {}) {
+        attach: function (name, path, options = {}) {
             throw new Error("This method isnt fully completed and have some issues.");
-            if(!name) throw new TypeError(`Name parameter must be provided.`);
-            if(!path) throw new TypeError(`Path parameter must be provided.`);
+            if (!name) throw new TypeError(`Name parameter must be provided.`);
+            if (!path) throw new TypeError(`Path parameter must be provided.`);
 
             return runMethod("attach", name, path, options, opts);
         },
-        detach: function(name, options = {}) {
+        detach: function (name, options = {}) {
             throw new Error("This method isnt fully completed and have some issues.");
 
-            if(!name) throw new TypeError(`Name parameter must be provided.`);
+            if (!name) throw new TypeError(`Name parameter must be provided.`);
 
             return runMethod("detach", name, options, opts);
         },
@@ -124,10 +125,17 @@ let exportsObject = (db, opts) => {
                     if (err) throw err;
                 });
                 db = new Database("db.sqlite");
-            }
+            },
+            delete: function (name) {
+                if (!fs.existsSync("./backups")) throw new Error("Backups folder does not exists.");
+                if (!fs.existsSync(`./backups/${name}`)) throw new Error("Backup file does not exists.");
+
+                fs.unlinkSync(`./backups/${name}`);
+            },
         },
         originalDB: db
     }
+    return obj;
 };
 
 function table(name) {
