@@ -3,4 +3,4 @@
 
 > [Documentation](#docs)
 <br>
-> [NPM Package](https://www.npmjs.com/package/quick.db)
+> [NPM Package](https://www.npmjs.com/package/sigidb-test)
