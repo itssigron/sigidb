@@ -46,6 +46,13 @@ If none of these solved your problem, try browsing [previous issues](https://git
 - [db#deleteTable()](#dbdeleteTablename)
 - [db#set()](#dbsetkey-value-options)
 - [db#get()](#dbgetkey-options)
+- [db#has()](#dbhaskey-options)
+- [db#delete()](#dbdeletekey-options)
+- [db#push()](#dbpushkey-value-options)
+- [db#add()](#dbaddkey-value-options)
+- [db#subtract()](#dbsubtractkey-value-options)
+- [db#all()](#dballfilter-options)
+
 
 ### db
 Require database.
@@ -119,7 +126,7 @@ console.log(db.all({table: "users"})) // SqliteError: no such table: users
 ### db#set(*key*, *value*, [*options*])
 - `key`: The target's key which the value will be assigned to.
 - `value`: The value which will be assigned to the key.
-- `options.table`: The table to get the value from. default is 'main'.
+- `options.table`: The table to get the target from. default is 'main'.
 
 Store a value for a key in the database. <br>
 Returns *value*
@@ -134,7 +141,7 @@ console.log(db.get("test", {table: "test-table"})) // 4
 
 ### db#get(*key*, [*options*])
 - `key`: The target's key to get the value from.
-- `options.table`: The table to get the value from. default is 'main'.
+- `options.table`: The table to get the target from. default is 'main'.
 
 **Alias:** fetch<br>
 Returns: *?value*
@@ -147,7 +154,7 @@ console.log(db.get("unknown-key")) // undefined
 
 ### db#has(*key*, [*options*])
 - `key`: The target's key to get the value from.
-- `options.table`: The table to get the value from. default is 'main'.
+- `options.table`: The table to get the target from. default is 'main'.
 
 Returns: *Boolean*
 
@@ -164,10 +171,61 @@ db.has("test1.test2") //true
 db.has("test1.test4") //false
 ```
 
+### db#type(*key*, [*options*])
+- `key`: The target's key which its type will be returned.
+- `options.table`: The table to get the target from. default is 'main'.
+
+```js
+db.set("test", 5)
+db.type("test") // 'Number'
+
+db.set("test", "hey")
+db.type("test") // 'String'
+
+db.set("test", {})
+db.type("test") // 'Object'
+
+db.set("test", [])
+db.type("test") // 'Array'
+```
+How it works? it checks for the constructor name, e.g:
+```js
+<value>.constructor.name
+"".constructor.name // 'String'
+```
+
+### db#delete(*key*, [*options*])
+- `key`: The target's key which will be deleted from the database.
+- `options.table`: The table to delete the value from. default is 'main'.
+
+Returns: *Boolean* whether it got deleted or not (if target not exists will return false).
+
+
+```js
+db.set("test", 5)
+db.delete("test") //true
+db.delete("unknown-key") // false
+```
+
+### db#deleteAll([*options*])
+- `options.table`: The table to delete all the values from. default is 'main'.
+
+Returns: *Number* The number of entries which got deleted.
+
+
+```js
+db.set("test", 5)
+db.set("test2", 3)
+db.all() // [{id: "test", value: 5}, {id: "test2", value: 3}]
+db.deleteAll() // 2
+db.all() //[]
+```
+
+
 ### db#push(*key*, *value*, [*options*])
 - `key`: The target's key which the value will be pushed to.
 - `value`: The value which will be pushed to the target.
-- `options.table`: The table to get the value from. default is 'main'.
+- `options.table`: The table to get the target from. default is 'main'.
 
 Pushes a value to an array in the database. <br>
 Returns *main object* || *value*
@@ -183,7 +241,7 @@ db.push("users", 2); // [1,2], pushes the value to the users array.
 ### db#add(*key*, *value*, [*options*])
 - `key`: The target's key which the value will be added to.
 - `value`: The value which will be added to the target.
-- `options.table`: The table to get the value from. default is 'main'.
+- `options.table`: The table to get the target from. default is 'main'.
 
 Similar to db.push, but instead of pushing to the array target, its adding the values.
 ```js
@@ -195,7 +253,7 @@ db.add("test", 3) //8
 ### db#subtract(*key*, *value*, [*options*])
 - `key`: The target's key which the value will be subtracted from.
 - `value`: The value which will be subtracted from the target.
-- `options.table`: The table to get the value from, default is 'main'.
+- `options.table`: The table to get the target from, default is 'main'.
 
 Same as db.add, but instead of adding the values its subtracts target with *value*
 ```js
