@@ -1,7 +1,7 @@
 const Database = require("better-sqlite3");
 const util = require("./util/util");
 const fs = require("fs");
-const db = new Database(":memory:");
+const db = new Database("db.sqlite");
 
 
 let exportsObject = (db, opts) => {
