@@ -45,6 +45,7 @@ If none of these solved your problem, try browsing [previous issues](https://git
 - [db#table()](#dbtablename)
 - [db#deleteTable()](#dbdeleteTablename)
 - [db#set()](#dbsetkey-value-options)
+- [db#get()](#dbgetkey-options)
 
 ### db
 Require database.
@@ -125,6 +126,7 @@ console.log(db.get("test", {table: "test-table"})) // 4
 ```
 
 ### db#get(*key*, [*options*])
+**Alias:** fetch<br>
 Returns: *?value*
 
 ```js
@@ -132,9 +134,38 @@ console.log(db.get("test")) //5
 console.log(db.get("unknown-key")) // undefined
 ```
 
+### db#get(*key*, [*options*])
+Returns: *Boolean*
+
+```js
+db.set("test", 3);
+db.has("test") //true
+db.has("unknown-key") // false
+```
+Also works with object.
+```js
+db.set("test1.test2.test3", 3);
+db.has("test1") //true
+db.has("test1.test2") //true
+db.has("test1.test4") //false
+```
+
+### db#push(*key*, *value*, [*options*])
+Pushes a value to an array in the database. <br>
+Returns *main object* || *value*
+- `options.table`: table to push the key to the array.
+```js
+const db = require("sigidb-test");
+db.set("test", 5) // sets the value to a Number (pushes requires it to be an array).
+db.push("test", "random value") // Error, target is not an array.
+db.push("not-exists", "pistol") // returns ['pistol'], creates a new array in the key 'not-exists' because its not exists.
+db.set("users", [1]); // set the 'users' key to have an array with index 0 as "1".
+db.push("users", 2); // [1,2], pushes the value to the users array.
+```
+
 # Working with objects
 sigidb works with objects.<br>
-## What it means?
+### What it means?
 That you can set and get objects with string suport.
 ### Example:
 ```js
@@ -144,4 +175,4 @@ db.get("users") // {"123": {guns: ["pistol"]}}
 db.get("users.123") // {guns: ["pistol"]}
 db.get("users.123.guns.0") // "pistol", db.get works with array indexes too, because 'users.123.guns' returns ["pistol"] (type array), so ".0" will return the value of the "0" index.
 ```
-**Note:** it works on everything that requires the *key* parameter, like `set`, `get`, `push`, etc.
+**Note:** it works on everything that requires the *key* parameter, like [`set`](#dbsetkey-value-options), [`get`](#dbgetkey-options), [`push`](#dbpushkey-value-options), etc.
