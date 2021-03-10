@@ -1,11 +1,12 @@
 {
   "name": "sigidb",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Wrapper package for better-sqlite3, super easy to use.",
   "main": "index.js",
   "directories": {
     "lib": "lib"
   },
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
