@@ -6,5 +6,5 @@
 
 
  ## What is sigidb ?
-> sigidb is a wrapper package for better-sqlite3, super easy to use, includes better-sqlite3 database instance.
+ sigidb is a wrapper package for better-sqlite3, super easy to use, includes better-sqlite3 database instance.
 
