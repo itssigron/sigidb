@@ -1,7 +1,8 @@
+module.exports = function database(name, options) {
 const Database = require("better-sqlite3");
 const util = require("./util/util");
 const fs = require("fs");
-const db = new Database("db.sqlite");
+const db = new Database(name, options);
 
 
 let exportsObject = (db, opts) => {
@@ -149,4 +150,5 @@ function table(name) {
     return exportsObject(db, opts);
 };
 
-module.exports = exportsObject(db)
+return exportsObject(db);
+};
