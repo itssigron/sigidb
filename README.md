@@ -2,7 +2,7 @@
 
 
 > [Documentation](#Documentation)<br>
-> [NPM Package](https://www.npmjs.com/package/sigidb-test)
+> [NPM Package](https://www.npmjs.com/package/sigidb)
 
 
  ## What is sigidb ?
@@ -31,7 +31,7 @@ If you have trouble installing `sigidb` because of `better-sqlite3`, follow this
     npm config set msvs_version 2019
     npm config set msbuild_path "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe"
     ```
-    5. Run `npm install sigidb-test`
+    5. Run `npm install sigidb`
 
 If none of these solved your problem, try browsing [previous issues](https://github.com/JoshuaWise/better-sqlite3/issues?q=is%3Aissue) or open a [new issue](https://github.com/JoshuaWise/better-sqlite3/issues/new).
 
@@ -59,7 +59,7 @@ If none of these solved your problem, try browsing [previous issues](https://git
 ### db
 Require database.
 ```js
-const db = require("sigidb-test");
+const db = require("sigidb");
 ```
 
 ### db#originalDB
@@ -83,7 +83,7 @@ Database {
 Returns a new sigidb database object using [better-sqlite3#Database](https://github.com/JoshuaWise/better-sqlite3/blob/master/docs/api.md#class-database)
 
 ```js
-const db = require("sigidb-test");
+const db = require("sigidb");
 const db2 = db.Database("second-db.sqlite"); //create new sigidb database object on second-db.sqlite, if the file does not exists, better-sqlite3 will create it for you.
 db2.set("test", 3); //set a new key in second-db.sqlite
 console.log(db2.get("test")); //3
@@ -93,7 +93,7 @@ console.log(db2.get("test")); //3
 Returns all tables in current database.
 
 ```js
-const db = require("sigidb-test") //table is main because its the default table.
+const db = require("sigidb") //table is main because its the default table.
 const users = db.table("users"); // sigidb database object with users as its default table (creates the table if not exists).
 console.log(db.tables()); // ["main", "users"]
 ```
@@ -104,7 +104,7 @@ console.log(db.tables()); // ["main", "users"]
 Returns sigidb database object with *name* table as the default table.<br>
 
 ```js
-const db = require("sigidb-test") //table is main because its the default table.
+const db = require("sigidb") //table is main because its the default table.
 const users = db.table("users"); // sigidb database object with users as its default table (creates the table if not exists).
 console.log(db.tables()); // ["main", "users"]
 db.set("test1", 1);
@@ -133,7 +133,7 @@ console.log(db.all({table: "users"})) // SqliteError: no such table: users
 Store a value for a key in the database. <br>
 Returns *value*
 ```js
-const db = require("sigidb-test");
+const db = require("sigidb");
 db.set("test", 5) // set a new key named 'test' with the value 5.
 console.log(db.get("test")) // 5
 
@@ -232,7 +232,7 @@ db.all() //[]
 Pushes a value to an array in the database. <br>
 Returns *main object* || *value*
 ```js
-const db = require("sigidb-test");
+const db = require("sigidb");
 db.set("test", 5) // sets the value to a Number (pushes requires it to be an array).
 db.push("test", "random value") // Error, target is not an array.
 db.push("not-exists", "pistol") // returns ['pistol'], creates a new array in the key 'not-exists' because its not exists.
@@ -287,7 +287,7 @@ sigidb works with objects.<br>
 That you can set and get objects with string suport.
 ### Example:
 ```js
-const db = require("sigidb-test");
+const db = require("sigidb");
 db.set("users.123.guns", ["pistol"]);
 db.get("users") // {"123": {guns: ["pistol"]}}
 db.get("users.123") // {guns: ["pistol"]}
