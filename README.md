@@ -9,7 +9,7 @@
  sigidb is a wrapper package for better-sqlite3, super easy to use, includes better-sqlite3 database instance.
 
 
-# <a name="Documentation" style="color: white">Documentation</a>
+# <a name="docs" style="color: white">Documentation</a>
 
 - [Datebase](#Database)
 - [Database#originalDB](#Database.originalDB)
