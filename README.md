@@ -90,6 +90,8 @@ console.log(db.tables()); // ["main", "users"]
 ```
 
 ### db#table(*name*)
+- `name`: The name of the table to use, creates it if not exists.
+
 Returns sigidb database object with *name* table as the default table.<br>
 
 ```js
@@ -105,6 +107,8 @@ console.log(users.all()) // [{id: "test1", value: 2}] (no need to provide a tabl
 ```
 
 ### db#deleteTable(*name*)
+- `name`: The name of the table to delete, throws an error if the table does not exists.
+
 Deletes provided table.
 ```js
 console.log(db.all({table: "users"})) // [{id: "test1", value: 2}]
@@ -113,9 +117,12 @@ console.log(db.all({table: "users"})) // SqliteError: no such table: users
 ```
 
 ### db#set(*key*, *value*, [*options*])
+- `key`: The target's key which the value will be assigned to.
+- `value`: The value which will be assigned to the key.
+- `options.table`: The table to get the value from. default is 'main'.
+
 Store a value for a key in the database. <br>
 Returns *value*
-- `options.table`: table to store the key and value
 ```js
 const db = require("sigidb-test");
 db.set("test", 5) // set a new key named 'test' with the value 5.
@@ -126,15 +133,22 @@ console.log(db.get("test", {table: "test-table"})) // 4
 ```
 
 ### db#get(*key*, [*options*])
+- `key`: The target's key to get the value from.
+- `options.table`: The table to get the value from. default is 'main'.
+
 **Alias:** fetch<br>
 Returns: *?value*
+
 
 ```js
 console.log(db.get("test")) //5
 console.log(db.get("unknown-key")) // undefined
 ```
 
-### db#get(*key*, [*options*])
+### db#has(*key*, [*options*])
+- `key`: The target's key to get the value from.
+- `options.table`: The table to get the value from. default is 'main'.
+
 Returns: *Boolean*
 
 ```js
@@ -151,9 +165,12 @@ db.has("test1.test4") //false
 ```
 
 ### db#push(*key*, *value*, [*options*])
+- `key`: The target's key which the value will be pushed to.
+- `value`: The value which will be pushed to the target.
+- `options.table`: The table to get the value from. default is 'main'.
+
 Pushes a value to an array in the database. <br>
 Returns *main object* || *value*
-- `options.table`: table to push the key to the array.
 ```js
 const db = require("sigidb-test");
 db.set("test", 5) // sets the value to a Number (pushes requires it to be an array).
@@ -161,6 +178,47 @@ db.push("test", "random value") // Error, target is not an array.
 db.push("not-exists", "pistol") // returns ['pistol'], creates a new array in the key 'not-exists' because its not exists.
 db.set("users", [1]); // set the 'users' key to have an array with index 0 as "1".
 db.push("users", 2); // [1,2], pushes the value to the users array.
+```
+
+### db#add(*key*, *value*, [*options*])
+- `key`: The target's key which the value will be added to.
+- `value`: The value which will be added to the target.
+- `options.table`: The table to get the value from. default is 'main'.
+
+Similar to db.push, but instead of pushing to the array target, its adding the values.
+```js
+db.add("not-exists", 3) //3 because the key is not exists so its sets it to the provided number.
+db.set("test", 5)
+db.add("test", 3) //8
+```
+
+### db#subtract(*key*, *value*, [*options*])
+- `key`: The target's key which the value will be subtracted from.
+- `value`: The value which will be subtracted from the target.
+- `options.table`: The table to get the value from, default is 'main'.
+
+Same as db.add, but instead of adding the values its subtracts target with *value*
+```js
+db.subtract("not-exists", 3) //-3 because the key is not exists so its sets it to the provided number with '-'.
+db.set("test", 5)
+db.subtract("test", 3) //2
+```
+
+### db#all([*filter*], [*options*])
+- `filter`: function to use as the filter of the result, default is null.
+- `options.table`: The table to get the values from, default is 'main'.
+
+Returns all values in the provided table.
+
+
+```js
+db.set("key1", 1)
+db.set("key2", 2)
+db.set("key3", 3)
+
+db.all() // [{id: "key1", value: 1}, {id: "key2", value: 2}, {id: "key3", value: 3}];
+
+db.all(data => data.value > 1) //[{id: "key2", value: 2}, {id: "key3", value: 3}];
 ```
 
 # Working with objects
