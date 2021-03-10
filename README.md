@@ -34,7 +34,7 @@ returns better-sqlite3 database's instance.<br>
 see also [better-sqlite3#Database](https://github.com/JoshuaWise/better-sqlite3/blob/master/docs/api.md#class-database)
 ```js
 console.log(db.originalDB);
-/*{
+/*
 Database {
   inTransaction: false,
   open: true,
@@ -42,5 +42,5 @@ Database {
   readonly: false,
   name: 'db.sqlite'
 }
-} */
+*/
 ```
