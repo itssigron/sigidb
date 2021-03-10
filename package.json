@@ -1,6 +1,6 @@
 {
   "name": "sigidb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wrapper package for better-sqlite3, super easy to use.",
   "main": "index.js",
   "directories": {
