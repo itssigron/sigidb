@@ -58,13 +58,26 @@ If none of these solved your problem, try browsing [previous issues](https://git
 
 ### db(*name*, [*options*])
 >Name, options parameters are for better-sqlite3 database.<br>
-You can see those parameters [here](https://github.com/JoshuaWise/better-sqlite3/blob/master/docs/api.md#class-database)
+You can see those parameters [here](https://github.com/JoshuaWise/better-sqlite3/blob/master/docs/api.md#class-database)<br>
+
+Extra parameters:
+- `options.id`: Sets the id of every function to the provided value.
+- `options.value`: Sets the id of every function to the provided value.
+- `options.table`: Sets the default table.
+
 
 Require database.
 ```js
 const DB = require("sigidb");
 const db = DB("db.sqlite");
 global.db = db;
+```
+
+## Using custom id/value
+```js
+const db = DB("db.sqlite", {id: "key", value: "data"});
+db.set("test", "hey");
+db.all() // [{key: "test", data: "hey"}]
 ```
 
 ### db#originalDB
