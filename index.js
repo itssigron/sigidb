@@ -26,7 +26,13 @@ let exportsObject = (db, opts) => {
         options.value = databaseOptions.value;
         
         db.prepare(`CREATE TABLE IF NOT EXISTS ${options.table} (${databaseOptions.id} TEXT, ${databaseOptions.value} TEXT)`).run();
-        return file(...params.slice(0, params.length - 2).concat(options));
+        const result = file(...params.slice(0, params.length - 2).concat(options));
+        if(db.name === ":memory:") {
+            if(name === "all") return result;
+        db.backup("saved.sqlite")
+        };
+
+        return result;
     };
     let obj = {
         Database(path, options) {
@@ -116,6 +122,9 @@ let exportsObject = (db, opts) => {
             throw new Error("This method isnt fully completed and have some issues.");
 
             return runMethod("databases", options, opts)
+        },
+        save: async function() {
+            return await obj.backups.create("saved.sqlite")
         },
         backups: {
             create: async function (name, options) {
