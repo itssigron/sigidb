@@ -1,6 +1,6 @@
 module.exports = function set(obj = {}, paths = [], value) {
     const inputObj = obj === null ? {} : obj;
-   if(typeof paths === "string") paths = paths.split(".");
+    if(typeof paths === "string") paths = paths.split(".");
     if (paths.length === 0) {
         return inputObj;
     }
@@ -16,7 +16,7 @@ module.exports = function set(obj = {}, paths = [], value) {
 
     const childNode = set(currentNode, rest, value);
 
-inputObj[path] = childNode;
+    inputObj[path] = childNode;
     return inputObj
 };
 
@@ -24,7 +24,7 @@ inputObj[path] = childNode;
 /*
 module.exports = function set(obj, path, value) {
     if (Object(obj) !== obj) return obj;
-    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || []; 
+    if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
     path.slice(0, -1).reduce((a, c, i) =>
         Object(a[c]) === a[c]
             ? a[c]
